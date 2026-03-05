@@ -1,0 +1,52 @@
+# Data files (large, not for version control)
+data/raw/
+data/processed/
+data/external/
+*.csv
+*.csv.gz
+*.parquet
+
+# ML artifacts
+mlruns/
+/models/
+*.pkl
+*.joblib
+
+# Monitoring reports
+/monitoring/reports/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environment
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+
+# Docker
+docker/tmp/
+
+# Claude Code
+.claude/

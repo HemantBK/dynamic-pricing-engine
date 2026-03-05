@@ -1,0 +1,96 @@
+# Dynamic Pricing Engine Configuration
+# ======================================
+
+project:
+  name: "dynamic-pricing-engine"
+  version: "0.1.0"
+  description: "Real-time dynamic pricing engine for Airbnb listings"
+
+# Data paths
+data:
+  raw_dir: "data/raw"
+  processed_dir: "data/processed"
+  external_dir: "data/external"
+  city: "new-york-city"
+  # Inside Airbnb data URLs for NYC
+  insideairbnb:
+    base_url: "https://data.insideairbnb.com/united-states/ny/new-york-city"
+    listings_url: "https://data.insideairbnb.com/united-states/ny/new-york-city/2024-09-06/data/listings.csv.gz"
+    calendar_url: "https://data.insideairbnb.com/united-states/ny/new-york-city/2024-09-06/data/calendar.csv.gz"
+    reviews_url: "https://data.insideairbnb.com/united-states/ny/new-york-city/2024-09-06/data/reviews.csv.gz"
+
+# Weather API (Open-Meteo - free, no key)
+weather:
+  api_url: "https://api.open-meteo.com/v1/forecast"
+  latitude: 40.7128
+  longitude: -74.0060
+  variables:
+    - "temperature_2m"
+    - "precipitation_probability"
+    - "wind_speed_10m"
+
+# Holiday API (Nager.Date - free, no key)
+holidays:
+  api_url: "https://date.nager.at/api/v3/PublicHolidays"
+  country_code: "US"
+
+# Feature Engineering
+features:
+  price_floor_percentile: 5
+  price_ceiling_percentile: 95
+  location_clusters: 15
+  rolling_window_days: 7
+  demand_window_days: 30
+
+# Model Configuration
+model:
+  target_column: "price"
+  demand_target: "was_booked"
+  test_size: 0.2
+  cv_splits: 5
+  random_state: 42
+  xgboost:
+    n_estimators: 500
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    early_stopping_rounds: 50
+  lightgbm:
+    n_estimators: 500
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+
+# Optimization
+optimization:
+  price_floor_multiplier: 0.7
+  price_ceiling_multiplier: 1.5
+  method: "bounded"
+
+# API Configuration
+api:
+  host: "0.0.0.0"
+  port: 8000
+  model_path: "models/production"
+  log_requests: true
+
+# Dashboard Configuration
+dashboard:
+  host: "0.0.0.0"
+  port: 8501
+  api_url: "http://localhost:8000"
+  refresh_interval_seconds: 30
+
+# MLflow Configuration
+mlflow:
+  tracking_uri: "mlruns"
+  experiment_name: "dynamic-pricing"
+  model_registry_name: "pricing-model"
+
+# Monitoring
+monitoring:
+  drift_threshold_degraded: 0.3
+  drift_threshold_critical: 0.6
+  report_output_dir: "monitoring/reports"

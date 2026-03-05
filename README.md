@@ -2,8 +2,6 @@
 
 A production-grade dynamic pricing system that predicts the **optimal nightly price** for Airbnb listings in real time. It combines ML demand forecasting, price elasticity estimation from economic theory, and mathematical revenue optimization — all built with free, open-source tools and zero paid APIs.
 
-**Target Companies**: Uber, Airbnb, DoorDash, Booking.com, Amazon, Walmart
-
 ---
 
 ## Table of Contents
